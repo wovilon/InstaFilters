@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_filter.view.*
 
-class FilterAdapter(val filterItems :  ArrayList<FilterItem>, val context : Context) : RecyclerView.Adapter<ViewHolder>(){
+class FilterAdapter(val filterItems :  ArrayList<FilterItem>, val context : Context, val callback : FiltersCallback) : RecyclerView.Adapter<ViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_filter, parent, false))
@@ -20,6 +20,7 @@ class FilterAdapter(val filterItems :  ArrayList<FilterItem>, val context : Cont
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.image.setImageBitmap(filterItems[position].bitmap)
         holder.name.text = filterItems[position].name
+        holder.layout.setOnClickListener { callback.onSelected(position) }
     }
 
 }
@@ -28,4 +29,9 @@ class FilterAdapter(val filterItems :  ArrayList<FilterItem>, val context : Cont
 class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
     val image = itemView.ivFilter
     val name = itemView.tvFilterName
+    val layout = itemView.clItemFilter
+}
+
+interface FiltersCallback{
+    fun onSelected(i: Int)
 }
