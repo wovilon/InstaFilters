@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(), FiltersCallback {
             val intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(intent, 7);
         }
+        ivSave.setOnClickListener { BitmapSaver().saveTempBitmap(bitmap) }
 
     }
 
@@ -82,5 +83,6 @@ class MainActivity : AppCompatActivity(), FiltersCallback {
         bitmap = bitmaps[i].bitmap
         ivMainImage.setImageBitmap(bitmap)
     }
+
 
 }

@@ -64,7 +64,7 @@
             app:srcCompat="@android:drawable/ic_menu_camera" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/ivSave"
             android:layout_width="30dp"
             android:layout_height="40dp"
             app:layout_constraintBottom_toBottomOf="parent"
