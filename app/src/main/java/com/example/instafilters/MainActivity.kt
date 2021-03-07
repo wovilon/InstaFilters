@@ -36,6 +36,10 @@ class MainActivity : AppCompatActivity(), FiltersCallback {
         ivGallery.setOnClickListener {
             startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE)
         }
+        ivCamera.setOnClickListener {
+            val intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, 7);
+        }
 
     }
 
@@ -62,6 +66,12 @@ class MainActivity : AppCompatActivity(), FiltersCallback {
             val imageUri = data?.getData()
             //ivMainImage.setImageURI(imageUri)
             bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+            ivMainImage.setImageBitmap(bitmap)
+            generateBitmaps()
+            initAdapter()
+        }else if (requestCode == 7 && resultCode == RESULT_OK) {
+
+            bitmap = data?.getExtras()?.get("data") as Bitmap
             ivMainImage.setImageBitmap(bitmap)
             generateBitmaps()
             initAdapter()
