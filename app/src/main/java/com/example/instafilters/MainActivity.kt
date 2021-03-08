@@ -1,10 +1,13 @@
 package com.example.instafilters
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.provider.MediaStore
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mukesh.image_processing.ImageProcessor
@@ -41,7 +44,7 @@ class MainActivity : AppCompatActivity(), FiltersCallback {
             startActivityForResult(intent, 7);
         }
         ivSave.setOnClickListener { BitmapSaver().saveTempBitmap(bitmap) }
-
+        btCheckLogin.setOnClickListener { checkLogin() }
     }
 
     fun initAdapter(){
@@ -79,10 +82,27 @@ class MainActivity : AppCompatActivity(), FiltersCallback {
         }
     }
 
+    fun checkLogin(){
+        if (etLogin.text.toString().equals("User") && etPassword.text.toString().equals("12345"))
+        {
+            clLogin.visibility = View.GONE
+            hideKeyboard(this)
+        }
+    }
+
     override fun onSelected(i: Int) {
         bitmap = bitmaps[i].bitmap
         ivMainImage.setImageBitmap(bitmap)
     }
 
+    fun hideKeyboard(activity: Activity) {
+        val imm: InputMethodManager =
+            activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        var view = activity.currentFocus
+        if (view == null) {
+            view = View(activity)
+        }
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
 
 }
